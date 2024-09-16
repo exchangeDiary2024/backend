@@ -43,10 +43,15 @@ jobs:
             ps aux | grep 'java -jar' | grep -v grep | awk '{print $2}' | xargs -r kill -9 || echo "No app running"
             rm -rf *.jar
 
+      - name: Create SSH key file
+        run: |
+          echo "${{ secrets.EC2_KEY }}" > key.pem
+          chmod 400 key.pem 
+      
       - name: Deploy to EC2 using rsync
         run: |
-          rsync -avz -e "ssh -i ${{ secrets.EC2_KEY }}" ./server/build/libs/*.jar ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/app/
-      
+          rsync -avz -e "ssh -i key.pem" ./server/build/libs/*.jar ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/app/
+
       - name: Start Application on EC2
         uses: appleboy/ssh-action@master
         with:
