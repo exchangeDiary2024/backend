@@ -107,7 +107,24 @@
         </div>
     </div>
 
-    <div class></div>
+    <div class="error-modal" style="display: none; position: fixed; left: 0; bottom: 241px; width: 100%; height: 185px;">
+        <div style="margin: 0 auto; width: 326px; height: 185px;">
+            <div style="position: relative; top: 35px; border-radius: 20px; background: #FFF; border: 1px dashed #000; width: 326px; height: 150px; flex-shrink: 0;">
+                <div style="position: absolute; bottom: 115px; left: 128px; width: 70px; height: 70px;">
+                    <div style="width: 70px; height: 35px; background: #FFFFFF; border-radius: 150px 150px 0 0; border: 1px dashed #000; border-bottom: none;">
+                        <img src="/images/error.svg" style="position: relative; left: 10px; top: 10px; width: 50px; height: 50px; z-index: 1">
+                    </div>
+                    <div style="position: relative; bottom: 2px; width: 70px; height: 5px; background: #FFFFFF;"></div>
+                </div>
+                <div style="position: relative; top: 20px; width: 326px; height: 110px;">
+                    <div style="position: absolute; left: 13px; width: 300px; height: 110px; display: flex; justify-content: center; align-items: center;">
+                        <span class="error-text"></span>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="/js/errorModal.js"></script>

@@ -1,19 +1,27 @@
-function showErrorModal(message) {
-    const modal = document.getElementById('errorModal');
-    const errorMessage = document.getElementById('errorMessage');
-    errorMessage.textContent = message;
+const errorModal = document.querySelector(".error-modal");
 
-    modal.style.display = 'block';
+function showErrorModal(message) {
+    const errorMessage = document.querySelector(".error-text");
+
+    closeModal();
+
+    errorMessage.innerText = message;
+    errorModal.style.display = "block";
     setTimeout(() => {
-        modal.style.display = 'none';
+        errorModal.style.display = "none";
     }, 2500);
 
+    closeErrorModal();
+}
+
+function closeErrorModal() {
     window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
+        if (event.target !== errorModal) {
+            errorModal.style.display = "none";
         }
     };
 }
+
 // document.addEventListener('click', function(event) {
 //     const modal = document.getElementById('errorModal');
 //     if (modal.style.display === 'block') {

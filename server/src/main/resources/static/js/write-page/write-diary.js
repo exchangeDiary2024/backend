@@ -44,9 +44,7 @@ function writeDiary() {
     })
         .then(response => {
             if (response.status !== 201) {
-                return response.json().then(err => {
-                    throw { status: response.status, message: err.message }
-                })
+                throw response;
             }
             return response.headers.get("content-location");
         })
@@ -54,13 +52,19 @@ function writeDiary() {
             closeModal(); // TODO: 약간의 딜레이 문제
             showSuccess(contentLocation);
         })
-        .catch(err => {
-            if (err.status) {
-                showErrorModal(err.message);
-            } else {
-                showErrorModal("알 수 없는 오류가 발생했습니다.");
-            }
+        .catch(async response => {
+            showErrorModal(await getErrorMessage(response));
         })
+}
+
+function getErrorMessage(response) {
+     return response.json()
+        .then(data => {
+            if (data.message !== "") {
+                return data.message;
+            }
+            return "오류 발생";
+        });
 }
 
 function getMoodLocation() {
