@@ -44,7 +44,9 @@ function writeDiary() {
     })
         .then(response => {
             if (response.status !== 201) {
-                throw new Error();
+                return response.json().then(err => {
+                    throw { status: response.status, message: err.message }
+                })
             }
             return response.headers.get("content-location");
         })
@@ -52,8 +54,12 @@ function writeDiary() {
             closeModal(); // TODO: 약간의 딜레이 문제
             showSuccess(contentLocation);
         })
-        .catch(() => {
-            // ToDo: 예외 처리 로직 추가
+        .catch(err => {
+            if (err.status) {
+                showErrorModal(err.message);
+            } else {
+                showErrorModal("알 수 없는 오류가 발생했습니다.");
+            }
         })
 }
 
